@@ -3,7 +3,7 @@
   <head> <!-- lista med barn -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Stefans Exempel</title>
+    <title>My skincare</title>
     <link rel="shortcut icon" href="https://picocss.com/favicon.ico" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link rel="stylesheet" href="custom.css" />
@@ -13,8 +13,8 @@
     <!-- Header -->
     <header class="container">
       <hgroup>
-        <h1>My players</h1>
-        <h2>A great database</h2>
+        <h1>My skincare</h1>
+        <h2>A database for korean skincare products</h2>
       </hgroup>
     </header>
     <!-- ./ Header -->
@@ -30,16 +30,16 @@
         <form>
           <!-- Search -->
           <label for="search">Search</label>
-          <input type="search" id="searchPlayer" name="search" placeholder="Search" />
+          <input type="search" id="searchProduct" name="search" placeholder="Search" />
 </form>
 
-<table role="grid" id="allPlayers">
+<table role="grid" id="allProducts">
 <thead>
   <tr>
     <th scope="col">Name</th>
-    <th scope="col">Jersey</th>
-    <th scope="col">Position</th>
-    <th scope="col">Team</th>
+    <th scope="col">Brand</th>
+    <th scope="col">Price</th>
+    <th scope="col">Rating</th>
   </tr>
 </thead>
 <tbody>
@@ -49,7 +49,7 @@
 <br>
 
 <hr>
-<button id="btnAdd">Add new player</button>
+<button id="btnAdd">Add new product</button>
 
       </section>
 
@@ -83,32 +83,42 @@
                 <label>Name</label>
                   <input
                     type="text"
-                    name="playerName"
-                    id="playerName"
-                    placeholder="Player name"
-                    aria-label="Player name"
+                    name="productName"
+                    id="productName"
+                    placeholder="Product name"
+                    aria-label="Product name"
                     required
                   />
-                  <label>Jersey</label>
+                  <label>Brand</label>
+                  <input
+                    type="text"
+                    name="brand"
+                    id="brand"
+                    placeholder=""
+                    aria-label="Brand"
+                    required
+                  />
+                  <label>Price</label>
                   <input
                     type="number"
-                    name="jersey"
-                    id="jersey"
+                    name="price"
+                    id="price"
                     placeholder=""
-                    aria-label="Jersey"
+                    aria-label="Price"
                     required
                   />
-                  <label>Position</label>
+                  <label>Rating</label>
                   <select
-                    name="position"
-                    id="position"
+                    name="rating"
+                    id="rating"
                     placeholder=""
-                    aria-label="position"
+                    aria-label="rating"
                     required
                   >
-                  <option>Goalie</option>
-                  <option>Defence</option>
-                  <option>Forward</option>
+                  <option>3.5</option>
+                  <option>4</option>
+                  <option>4.5</option>
+                  <option>5</option>
                 </select>
 
       
