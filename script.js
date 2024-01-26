@@ -1,38 +1,38 @@
 
 
-const allPlayersTBody = document.querySelector("#allPlayers tbody")
-const searchPlayer = document.getElementById("searchPlayer")
+const allProductsTBody = document.querySelector("#allProducts tbody")
+const searchProduct = document.getElementById("searchProduct")
 const btnAdd = document.getElementById("btnAdd")
 const closeDialog = document.getElementById("closeDialog")
 
 
-function Player(id, name,jersey,team, position){
+function Product(id, name,brand ,price, rating){
     this.id = id
     this.name = name
-    this.jersey = jersey
-    this.team = team
-    this.position = position
+    this.brand = brand
+    this.price = price
+    this.rating = rating
     this.visible = true
     this.matches = function(searchFor){
         return  this.name.toLowerCase().includes(searchFor) || 
-                this.position.toLowerCase().includes(searchFor) || 
-                this.team.toLowerCase().includes(searchFor)        
+                this.price.toLowerCase().includes(searchFor) || 
+                this.rating.toLowerCase().includes(searchFor)        
     }
 }
 
-async function fetchPlayers(){
-    return await((await fetch('http://localhost:3000/players')).json())
+async function fetchProducts(){
+    return await((await fetch('http://localhost:3000/products')).json())
 }
 
-let players =  await fetchPlayers()
+let products =  await fetchProducts()
 
-searchPlayer.addEventListener("input", function() {
-    const searchFor = searchPlayer.value.toLowerCase() 
-    for(let i = 0; i < players.length;i++){ // TODO add a matches function
-        if(players[i].matches(searchFor)){
-            players[i].visible = true                            
+searchProduct.addEventListener("input", function() {
+    const searchFor = searchProduct.value.toLowerCase() 
+    for(let i = 0; i < products.length;i++){ // TODO add a matches function
+        if(products[i].matches(searchFor)){
+            products[i].visible = true                            
         }else{
-            players[i].visible = false 
+            products[i].visible = false 
         }
     }
     updateTable()
@@ -47,20 +47,20 @@ const createTableTdOrTh = function(elementType,innerText){
 }
 
 
-const playerName = document.getElementById("playerName")
-const jersey = document.getElementById("jersey")
-const position = document.getElementById("position")
+const productName = document.getElementById("productName")
+const price = document.getElementById("price")
+const rating = document.getElementById("rating")
 
-let editingPlayer = null
+let editingProduct = null
 
-const onClickPlayer = function(event){
+const onClickProduct = function(event){
     const htmlElementetSomViHarKlickatPa = event.target
-    console.log(htmlElementetSomViHarKlickatPa.dataset.stefansplayerid)
-    const player = players.find(p=> p.id === htmlElementetSomViHarKlickatPa.dataset.stefansplayerid)
-    playerName.value = player.name
-    jersey.value = player.jersey
-    position.value = player.position
-    editingPlayer = player
+    console.log(htmlElementetSomViHarKlickatPa.dataset.productid)
+    const product = products.find(p=> p.id === htmlElementetSomViHarKlickatPa.dataset.productid)
+    productName.value = product.name
+    price.value = price.jersey
+    rating.value = rating.position
+    editingProduct = product
 
     MicroModal.show('modal-1');
 
@@ -72,17 +72,17 @@ closeDialog.addEventListener("click",async (ev)=>{
     let method = ""
     console.log(url)
     var o = {
-        "name" : playerName.value,
-        "jersey" : jersey.value,
-        "position": position.value
+        "name" : productName.value,
+        "price" : price.value,
+        "rating": rating.value
         }
 
-    if(editingPlayer != null){
-        o.id = editingPlayer.id;
-        url =  "http://localhost:3000/players/" + o.id
+    if(editingProduct != null){
+        o.id = editingProduct.id;
+        url =  "http://localhost:3000/products/" + o.id
         method = "PUT"
     }else{
-        url =  "http://localhost:3000/players"
+        url =  "http://localhost:3000/products"
         method = "POST"
     }
 
@@ -97,16 +97,16 @@ closeDialog.addEventListener("click",async (ev)=>{
 
     let json = await response.json()
 
-    players = await fetchPlayers()
+    products = await fetchProducts()
     updateTable()
     MicroModal.close('modal-1');
 })
 
 btnAdd.addEventListener("click",()=>{
-    playerName.value = ""
-    jersey.value = 0
-    position.value = ""
-    editingPlayer = null
+    productName.value = ""
+    price.value = 0
+    rating.value = 0
+    editingProduct = null
 
     MicroModal.show('modal-1');
     
@@ -116,24 +116,24 @@ btnAdd.addEventListener("click",()=>{
 const updateTable = function(){
     // while(allPlayersTBody.firstChild)
     //     allPlayersTBody.firstChild.remove()
-    allPlayersTBody.innerHTML = ""
+    allProductsTBody.innerHTML = ""
 
     // först ta bort alla children
-    for(let i = 0; i < players.length;i++) { // hrmmm you do foreach if you'd like, much nicer! 
-        if(players[i].visible == false){
+    for(let i = 0; i < products.length;i++) { // hrmmm you do foreach if you'd like, much nicer! 
+        if(products[i].visible == false){
             continue
         }
         let tr = document.createElement("tr")
 
-        tr.appendChild(createTableTdOrTh("th", players[i].name))
-        tr.appendChild(createTableTdOrTh("td", players[i].jersey ))
-        tr.appendChild(createTableTdOrTh("td", players[i].position ))
-        tr.appendChild(createTableTdOrTh("td", players[i].team ))
+        tr.appendChild(createTableTdOrTh("th", products[i].name))
+        tr.appendChild(createTableTdOrTh("td", products[i].jersey ))
+        tr.appendChild(createTableTdOrTh("td", products[i].position ))
+        tr.appendChild(createTableTdOrTh("td", products[i].team ))
 
         let td = document.createElement("td")
         let btn = document.createElement("button")
         btn.textContent = "EDIT"
-        btn.dataset.stefansplayerid=players[i].id
+        btn.dataset.productid=products[i].id
         td.appendChild(btn)
         tr.appendChild(td)
 
@@ -146,7 +146,7 @@ const updateTable = function(){
         // })
 
 
-        allPlayersTBody.appendChild(tr)
+        allProductsTBody.appendChild(tr)
     }
 
     // innerHTML och backticks `
