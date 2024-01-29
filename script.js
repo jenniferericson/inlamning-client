@@ -21,7 +21,7 @@ function Product(id, name,brand ,price, rating){
 }
 
 async function fetchProducts(){
-    return await((await fetch('http://localhost:3000/products')).json())
+    return await((await fetch('http://localhost:3000/api/products')).json())
 }
 
 let products =  await fetchProducts()
@@ -79,10 +79,10 @@ closeDialog.addEventListener("click",async (ev)=>{
 
     if(editingProduct != null){
         o.id = editingProduct.id;
-        url =  "http://localhost:3000/products/" + o.id
+        url =  "http://localhost:3000/api/products/" + o.id
         method = "PUT"
     }else{
-        url =  "http://localhost:3000/products"
+        url =  "http://localhost:3000/api/products"
         method = "POST"
     }
 
@@ -126,9 +126,9 @@ const updateTable = function(){
         let tr = document.createElement("tr")
 
         tr.appendChild(createTableTdOrTh("th", products[i].name))
-        tr.appendChild(createTableTdOrTh("td", products[i].jersey ))
-        tr.appendChild(createTableTdOrTh("td", products[i].position ))
-        tr.appendChild(createTableTdOrTh("td", products[i].team ))
+        tr.appendChild(createTableTdOrTh("td", products[i].brand ))
+        tr.appendChild(createTableTdOrTh("td", products[i].price ))
+        tr.appendChild(createTableTdOrTh("td", products[i].rating ))
 
         let td = document.createElement("td")
         let btn = document.createElement("button")
@@ -138,7 +138,7 @@ const updateTable = function(){
         tr.appendChild(td)
 
 
-        btn.addEventListener("click",onClickPlayer);
+        btn.addEventListener("click",onClickProduct);
 
         // btn.addEventListener("click",function(){
         //       alert(players[i].name)  
