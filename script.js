@@ -6,7 +6,7 @@ const btnAdd = document.getElementById("btnAdd")
 const closeDialog = document.getElementById("closeDialog")
 
 
-function Product(id, name,brand ,price, rating){
+function Product(id, name, brand ,price, rating){
     this.id = id
     this.name = name
     this.brand = brand
@@ -48,6 +48,7 @@ const createTableTdOrTh = function(elementType,innerText){
 
 
 const productName = document.getElementById("productName")
+const brand = document.getElementById("brand")
 const price = document.getElementById("price")
 const rating = document.getElementById("rating")
 
@@ -58,8 +59,9 @@ const onClickProduct = function(event){
     console.log(htmlElementetSomViHarKlickatPa.dataset.productid)
     const product = products.find(p=> p.id === htmlElementetSomViHarKlickatPa.dataset.productid)
     productName.value = product.name
-    price.value = price.jersey
-    rating.value = rating.position
+    brand.value = product.brand
+    price.value = product.price
+    rating.value = product.rating
     editingProduct = product
 
     MicroModal.show('modal-1');
@@ -73,6 +75,7 @@ closeDialog.addEventListener("click",async (ev)=>{
     console.log(url)
     var o = {
         "name" : productName.value,
+        "brand" : brand.value,
         "price" : price.value,
         "rating": rating.value
         }
@@ -127,7 +130,7 @@ const updateTable = function(){
 
         tr.appendChild(createTableTdOrTh("th", products[i].name))
         tr.appendChild(createTableTdOrTh("td", products[i].brand ))
-        tr.appendChild(createTableTdOrTh("td", products[i].price ))
+        tr.appendChild(createTableTdOrTh("td", products[i].price + "kr"))
         tr.appendChild(createTableTdOrTh("td", products[i].rating ))
 
         let td = document.createElement("td")
