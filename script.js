@@ -6,8 +6,8 @@ const btnAdd = document.getElementById("btnAdd")
 const closeDialog = document.getElementById("closeDialog")
 
 
-function Product(id, name, brand ,price, rating){
-    this.id = id
+function Product(productId, name, brand ,price, rating){
+    this.productId = productId
     this.name = name
     this.brand = brand
     this.price = price
@@ -55,9 +55,9 @@ const rating = document.getElementById("rating")
 let editingProduct = null
 
 const onClickProduct = function(event){
-    const htmlElementetSomViHarKlickatPa = event.target
-    console.log(htmlElementetSomViHarKlickatPa.dataset.productid)
-    const product = products.find(p=> p.id === htmlElementetSomViHarKlickatPa.dataset.productid)
+    const clickedElement = event.target
+    console.log(clickedElement.dataset.productid)
+    const product = products.find(p=> p.id === clickedElement.dataset.productId)
     productName.value = product.name
     brand.value = product.brand
     price.value = product.price
@@ -136,7 +136,7 @@ const updateTable = function(){
         let td = document.createElement("td")
         let btn = document.createElement("button")
         btn.textContent = "EDIT"
-        btn.dataset.productid=products[i].id
+        btn.dataset.productid=products[i].productId
         td.appendChild(btn)
         tr.appendChild(td)
 
