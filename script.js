@@ -28,7 +28,7 @@ let products =  await fetchProducts()
 
 searchProduct.addEventListener("input", function() {
     const searchFor = searchProduct.value.toLowerCase() 
-    for(let i = 0; i < products.length;i++){ // TODO add a matches function
+    for(let i = 0; i < products.length;i++){ 
         if(products[i].matches(searchFor)){
             products[i].visible = true                            
         }else{
@@ -56,14 +56,16 @@ let editingProduct = null
 
 const onClickProduct = function(event){
     const clickedElement = event.target
-    console.log(clickedElement.dataset.productid)
-    const product = products.find(p=> p.id === clickedElement.dataset.productId)
+    console.log(clickedElement.dataset.productId)
+    console.log(clickedElement)
+    const product = products.find(p=> p.id == clickedElement.dataset.productId)
+    console.log(product)
     productName.value = product.name
     brand.value = product.brand
     price.value = product.price
     rating.value = product.rating
     editingProduct = product
-
+    console.log(editingProduct)
     MicroModal.show('modal-1');
 
 }
@@ -73,7 +75,7 @@ closeDialog.addEventListener("click",async (ev)=>{
     let url = ""
     let method = ""
     console.log(url)
-    var o = {
+    let product = {
         "name" : productName.value,
         "brand" : brand.value,
         "price" : price.value,
@@ -81,8 +83,8 @@ closeDialog.addEventListener("click",async (ev)=>{
         }
 
     if(editingProduct != null){
-        o.id = editingProduct.id;
-        url =  "http://localhost:3000/api/products/" + o.id
+        product.productId = editingProduct.id;
+        url =  "http://localhost:3000/api/products/" + product.productId
         method = "PUT"
     }else{
         url =  "http://localhost:3000/api/products"
@@ -95,7 +97,7 @@ closeDialog.addEventListener("click",async (ev)=>{
             'Content-Type': 'application/json'
           },
           method: method,
-          body: JSON.stringify(o)                
+          body: JSON.stringify(product)                
     })
 
     let json = await response.json()
@@ -117,12 +119,10 @@ btnAdd.addEventListener("click",()=>{
 
 
 const updateTable = function(){
-    // while(allPlayersTBody.firstChild)
-    //     allPlayersTBody.firstChild.remove()
+   
     allProductsTBody.innerHTML = ""
 
-    // först ta bort alla children
-    for(let i = 0; i < products.length;i++) { // hrmmm you do foreach if you'd like, much nicer! 
+    for(let i = 0; i < products.length;i++) { 
         if(products[i].visible == false){
             continue
         }
@@ -136,55 +136,34 @@ const updateTable = function(){
         let td = document.createElement("td")
         let btn = document.createElement("button")
         btn.textContent = "EDIT"
-        btn.dataset.productid=products[i].productId
+        btn.dataset.productId = products[i].id
         td.appendChild(btn)
         tr.appendChild(td)
 
 
         btn.addEventListener("click",onClickProduct);
 
-        // btn.addEventListener("click",function(){
-        //       alert(players[i].name)  
-        //       //                      detta funkar fast med sk closures = magi vg
-        // })
-
-
         allProductsTBody.appendChild(tr)
     }
 
-    // innerHTML och backticks `
-    // Problem - aldrig bra att bygga strängar som innehåller/kan innehålla html
-    //    injection
-    // for(let i = 0; i < players.length;i++) { // hrmmm you do foreach if you'd like, much nicer! 
-    //                                         // I will show you in two weeks
-    //                                         //  or for p of players     
-    //     let trText = `<tr><th scope="row">${players[i].name}</th><td>${players[i].jersey}</td><td>${players[i].position}</td><td>${players[i].team}</td></tr>`
-    //     allPlayersTBody.innerHTML += trText
-    // }
-    // createElement
+  
 }
-
-
-
 
 updateTable()
 
 
-
-
-
 MicroModal.init({
-    onShow: modal => console.info(`${modal.id} is shown`), // [1]
-    onClose: modal => console.info(`${modal.id} is hidden`), // [2]
+    onShow: modal => console.info(`${modal.id} is shown`), 
+    onClose: modal => console.info(`${modal.id} is hidden`), 
    
-    openTrigger: 'data-custom-open', // [3]
-    closeTrigger: 'data-custom-close', // [4]
-    openClass: 'is-open', // [5]
-    disableScroll: true, // [6]
-    disableFocus: false, // [7]
-    awaitOpenAnimation: false, // [8]
-    awaitCloseAnimation: false, // [9]
-    debugMode: true // [10]
+    openTrigger: 'data-custom-open', 
+    closeTrigger: 'data-custom-close', 
+    openClass: 'is-open', 
+    disableScroll: true, 
+    disableFocus: false, 
+    awaitOpenAnimation: false, 
+    awaitCloseAnimation: false, 
+    debugMode: true 
   });
 
 
