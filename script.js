@@ -71,6 +71,8 @@ const onClickProduct = function(event){
 }
 
 closeDialog.addEventListener("click",async (ev)=>{
+    MicroModal.close('modal-1');
+
     ev.preventDefault()
     let url = ""
     let method = ""
@@ -104,7 +106,6 @@ closeDialog.addEventListener("click",async (ev)=>{
 
     products = await fetchProducts()
     updateTable()
-    MicroModal.close('modal-1');
 })
 
 btnAdd.addEventListener("click",()=>{
