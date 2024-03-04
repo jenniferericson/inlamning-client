@@ -1,17 +1,3 @@
-function Product(productId, name, brand ,price, rating){
-    this.productId = productId;
-    this.name = name;
-    this.brand = brand;
-    this.price = price;
-    this.rating = rating;
-    this.visible = true;
-    this.matches = function(searchFor){
-        return  this.name.toLowerCase().includes(searchFor) || 
-                this.price.toLowerCase().includes(searchFor) || 
-                this.rating.toLowerCase().includes(searchFor)        
-    };
-};
-
 const productName = document.getElementById("productName");
 const brand = document.getElementById("brand");
 const price = document.getElementById("price");
@@ -115,10 +101,15 @@ searchProduct.addEventListener("input", function() {
 
 const closeDialog = document.getElementById("closeDialog");
 
-closeDialog.addEventListener("click",async (ev)=>{
+closeDialog.addEventListener("click",async (e)=>{
+    e.preventDefault();
+
+    if(productName.value === ""){
+        
+    }else{
+
     MicroModal.close('modal-1');
 
-    ev.preventDefault();
 
     let url = "";
     let method = "";
@@ -151,6 +142,7 @@ closeDialog.addEventListener("click",async (ev)=>{
 
     products = await fetchProducts();
     refresh();
+};
 });
 
 

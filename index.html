@@ -79,12 +79,12 @@
           </header>
           <main class="modal__content" id="modal-1-content">
               <form>
-                <label>Name</label>
+                <label>Name <span>*</span></label>
                   <input
                     type="text"
                     name="productName"
                     id="productName"
-                    placeholder="Product name"
+                    placeholder=""
                     aria-label="Product name"
                     required
                   />
@@ -95,7 +95,6 @@
                     id="brand"
                     placeholder=""
                     aria-label="Brand"
-                    required
                   />
                   <label>Price</label>
                   <input
@@ -104,7 +103,6 @@
                     id="price"
                     placeholder=""
                     aria-label="Price"
-                    required
                   />
                   <label>Rating</label>
                   <select
@@ -113,12 +111,12 @@
                     id="rating"
                     placeholder=""
                     aria-label="rating"
-                    required
                   >
                   <option>3</option>
                   <option>4</option>
                   <option>5</option>
                 </select>
+                <p> <span>*</span> - Required field</p>
 
       
               </form>
