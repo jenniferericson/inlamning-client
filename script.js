@@ -1,24 +1,3 @@
-const productName = document.getElementById("productName");
-const brand = document.getElementById("brand");
-const price = document.getElementById("price");
-const rating = document.getElementById("rating");
-
-let editingProduct = null;
-
-const onClickProduct = function(event){
-    const clickedElement = event.target;
-    const product = products.find(p=> p.id == clickedElement.dataset.productId);
-
-    productName.value = product.name;
-    brand.value = product.brand;
-    price.value = product.price;
-    rating.value = product.rating;
-    editingProduct = product;
-
-    MicroModal.show('modal-1');
-
-};
-
 const allSortLinks = document.getElementsByClassName('bi');
 let  currentSortCol = "";
 let currentSortOrder = "";
@@ -33,13 +12,6 @@ Object.values(allSortLinks).forEach(link=>{
         refresh();
     });  
 });
-
-
-const createTableTdOrTh = function(elementType,innerText){
-    let element = document.createElement(elementType);
-    element.textContent = innerText;
-    return element;
-};
 
 const pager = document.getElementById('pager') 
 
@@ -67,6 +39,19 @@ function createPager(count,pageNo,currentPageSize){
 }
 
 
+const productName = document.getElementById("productName");
+const brand = document.getElementById("brand");
+const price = document.getElementById("price");
+const rating = document.getElementById("rating");
+
+let editingProduct = null;
+
+const createTableTdOrTh = function(elementType,innerText){
+    let element = document.createElement(elementType);
+    element.textContent = innerText;
+    return element;
+};
+
 async function refresh(){
     let offset = (currentPageNo - 1) * currentPageSize
     let url = "http://localhost:3000/api/products?sortCol=" 
@@ -81,7 +66,7 @@ async function refresh(){
 
     const {result, total} = await response.json();
     let count = total;
-    const products = result
+    const products = result;
 
     const allProductsTBody = document.querySelector("#allProducts tbody");
     allProductsTBody.innerHTML = "";
@@ -105,7 +90,18 @@ async function refresh(){
         td.appendChild(btn);
         tr.appendChild(td);
 
-        btn.addEventListener("click",onClickProduct);
+        btn.addEventListener("click", (e) => {
+            const clickedElement = e.target;
+            const product = products.find(p=> p.id == clickedElement.dataset.productId);
+        
+            productName.value = product.name;
+            brand.value = product.brand;
+            price.value = product.price;
+            rating.value = product.rating;
+            editingProduct = product;
+        
+            MicroModal.show('modal-1');
+        });
 
         allProductsTBody.appendChild(tr);
     };
