@@ -449,6 +449,12 @@
   justify-content: space-between;
 }
 
-span {
+.error {
   color: red;
 }
+
+.active {
+  border: lightgray 1px solid;
+  padding: 5px 10px;
+}
+

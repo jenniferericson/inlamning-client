@@ -24,8 +24,8 @@
 
 
 
-    <!-- Main -->
-    <main class="container">
+  <!-- Main -->
+  <main class="container">
       <section id="test2">
         
         <form>
@@ -36,25 +36,31 @@
 
         <table role="grid" id="allProducts">
           <thead>
-  <tr>
-    <th scope="col">Name <i data-sortcol="name" data-sortorder="asc" class="bi bi-caret-down-fill"></i> <i data-sortcol="name" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
-    <th scope="col">Brand <i data-sortcol="brand" data-sortorder="asc" class="bi bi-caret-down-fill"></i> <i data-sortcol="brand" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
-    <th scope="col">Price <i data-sortcol="price" data-sortorder="asc" class="bi bi-caret-down-fill"></i> <i data-sortcol="price" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
-    <th scope="col">Rating <i data-sortcol="rating" data-sortorder="asc"class="bi bi-caret-down-fill"></i> <i data-sortcol="rating" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
-  </tr>
+            <tr>
+              <th scope="col">Name <i data-sortcol="name" data-sortorder="asc" class="bi bi-caret-down-fill"></i> <i data-sortcol="name" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
+              <th scope="col">Brand <i data-sortcol="brand" data-sortorder="asc" class="bi bi-caret-down-fill"></i> <i data-sortcol="brand" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
+              <th scope="col">Price <i data-sortcol="price" data-sortorder="asc" class="bi bi-caret-down-fill"></i> <i data-sortcol="price" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
+              <th scope="col">Rating <i data-sortcol="rating" data-sortorder="asc"class="bi bi-caret-down-fill"></i> <i data-sortcol="rating" data-sortorder="desc" class="bi bi-caret-up-fill"></i></th>
+            </tr>
           </thead>
+
           <tbody>
   
           </tbody>
         </table>
-        <br>
-
         <hr>
         <button id="btnAdd">Add new product</button>
+        
+        <!-- Pager -->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination" id="pager">
+          </ul>
+        </nav>
+        <!-- ./ Pager -->
 
       </section>
     </main>
-    <!-- ./ Main -->
+  <!-- ./ Main -->
 
     <!-- Footer -->
     <footer class="container">
@@ -67,9 +73,8 @@
     </footer>
     <!-- ./ Footer -->
 
-
+   <!-- Modal -->
     <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-      <form id="editForm">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
           <header class="modal__header">
@@ -78,8 +83,8 @@
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-              <form>
-                <label>Name <span>*</span></label>
+              <form id="editForm">
+                <label>Name <span class="error">*</span></label>
                   <input
                     type="text"
                     name="productName"
@@ -88,29 +93,32 @@
                     aria-label="Product name"
                     required
                   />
-                  <label>Brand</label>
+                  <label>Brand <span class="error">*</span></label>
                   <input
                     type="text"
                     name="brand"
                     id="brand"
                     placeholder=""
                     aria-label="Brand"
+                    required
                   />
-                  <label>Price</label>
+                  <label>Price <span class="error">*</span></label>
                   <input
                     type="number"
                     name="price"
                     id="price"
                     placeholder=""
                     aria-label="Price"
+                    required
                   />
-                  <label>Rating</label>
+                  <label>Rating<span class="error">*</span></label>
                   <select
                     type="number"
                     name="rating"
                     id="rating"
                     placeholder=""
                     aria-label="rating"
+                    required
                   >
                   <option>3</option>
                   <option>4</option>
@@ -127,8 +135,8 @@
           </footer>
         </div>
       </div>
-    </form>
- </div>
+    </div>
+     <!-- ./ Modal -->
 
 
   <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>

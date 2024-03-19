@@ -22,6 +22,9 @@ const onClickProduct = function(event){
 const allSortLinks = document.getElementsByClassName('bi');
 let  currentSortCol = "";
 let currentSortOrder = "";
+let currentPageNo = 1;
+let currentPageSize = 5;
+let currentQ = "";
 
 Object.values(allSortLinks).forEach(link=>{
     link.addEventListener("click",()=>{
@@ -38,10 +41,37 @@ const createTableTdOrTh = function(elementType,innerText){
     return element;
 };
 
+const pager = document.getElementById('pager') 
+
+function createPager(count,pageNo,currentPageSize){
+    pager.innerHTML = ""
+    let totalPages = Math.ceil(count / currentPageSize)
+    for(let i = 1; i <= totalPages; i++){
+        const li = document.createElement('li')
+        li.classList.add("page-item")
+        if(i == pageNo){
+            li.classList.add("active")
+        }
+        const a = document.createElement('a')
+        a.href="#"
+        a.innerText = i
+        a.classList.add("page-link")
+        li.appendChild(a)
+        a.addEventListener("click",()=>{
+            
+            currentPageNo = i
+            refresh()
+        })
+        pager.appendChild(li)
+    }
+}
+
 
 async function refresh(){
+    let offset = (currentPageNo - 1) * currentPageSize
     let url = "http://localhost:3000/api/products?sortCol=" 
-        + currentSortCol + "&sortOrder=" + currentSortOrder;
+        + currentSortCol + "&sortOrder=" + currentSortOrder +
+        "&q=" + currentQ + "&offset=" + offset + "&limit=" + currentPageSize
 
     const response = await fetch(url,{
         headers:{
@@ -49,7 +79,9 @@ async function refresh(){
         }
     });  
 
-    const products = await response.json();
+    const {result, total} = await response.json();
+    let count = total;
+    const products = result
 
     const allProductsTBody = document.querySelector("#allProducts tbody");
     allProductsTBody.innerHTML = "";
@@ -77,6 +109,8 @@ async function refresh(){
 
         allProductsTBody.appendChild(tr);
     };
+
+    createPager(count,currentPageNo,currentPageSize);
 };   
 
 await refresh();
@@ -84,32 +118,39 @@ await refresh();
 
 const searchProduct = document.getElementById("searchProduct");
 
-searchProduct.addEventListener("input", function() {
-    const searchFor = searchProduct.value.toLowerCase() 
-    for(let i = 0; i < products.length;i++){ 
-        if(products[i].matches(searchFor)){
-            products[i].visible = true;                            
-        }else{
-            products[i].visible = false; 
-        };
+function debounce(cb, delay = 250) {
+    let timeout;
+  
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(...args);
+      }, delay);
     };
+  };
 
+  const updateQuery = debounce(query => {
+    currentQ = query;
     refresh();
+  }, 1000);
 
+
+searchProduct.addEventListener("input", (e) => {
+    updateQuery(e.target.value);
 });
 
 
 const closeDialog = document.getElementById("closeDialog");
+const editForm = document.getElementById("editForm");
 
 closeDialog.addEventListener("click",async (e)=>{
     e.preventDefault();
 
-    if(productName.value === ""){
+    if(editForm.checkValidity() === false){
         
     }else{
 
     MicroModal.close('modal-1');
-
 
     let url = "";
     let method = "";
@@ -142,7 +183,7 @@ closeDialog.addEventListener("click",async (e)=>{
 
     products = await fetchProducts();
     refresh();
-};
+   };
 });
 
 
