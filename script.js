@@ -53,6 +53,7 @@ const createTableTdOrTh = function(elementType,innerText){
 };
 
 async function refresh(){
+    currentPageNo = 1;
     let offset = (currentPageNo - 1) * currentPageSize
     let url = "http://localhost:3000/api/products?sortCol=" 
         + currentSortCol + "&sortOrder=" + currentSortOrder +
